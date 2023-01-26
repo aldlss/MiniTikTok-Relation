@@ -95,9 +95,9 @@ service RelationService {
     // 对其他用户进行 关注/取关 操作
     rpc FollowAction (FollowActionRequest) returns (FollowActionResponse) {}
     // 获取用户关注列表
-    rpc ListFollow (ListFollowRequest) returns (ListFollowResponse) {}
+    rpc ListFollow (ListFollowRequest) returns (stream ListFollowResponse) {}
     // 获取用户粉丝列表
-    rpc ListFans (ListFansRequest) returns (ListFansResponse) {}
+    rpc ListFans (ListFansRequest) returns (stream ListFansResponse) {}
     // 获取用户好友列表
-    rpc ListFriends (ListFriendsRequest) returns (ListFriendsResponse) {}
+    rpc ListFriends (ListFriendsRequest) returns (stream ListFriendsResponse) {}
 }
