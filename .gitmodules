@@ -1,0 +1,3 @@
+[submodule "app/MiniTikTok-Proto"]
+	path = app/MiniTikTok-Proto
+	url = https://github.com/ThalliMega/MiniTikTok-Proto.git
