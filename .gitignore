@@ -1,1 +1,4 @@
-pb/
+.idea/
+go.work*
+envmark.txt
+*output/
