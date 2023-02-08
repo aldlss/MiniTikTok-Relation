@@ -65,7 +65,7 @@ func Follow(ctx context.Context, id uint32, toId uint32) error {
 	res, err = tra.Run(ctx, `
 		MATCH (a:User), (b:User)
 		WHERE a.user_id = $id AND b.user_id = $to_id
-		SET a.follow = a.follow + 1, b.fans = b.fans + 1`,
+		SET a.follow_count = a.follow_count + 1, b.follower_count = b.follower_count + 1`,
 		map[string]any{
 			"id":    id,
 			"to_id": toId,
@@ -126,7 +126,7 @@ func UnFollow(ctx context.Context, id uint32, toId uint32) error {
 		MATCH (a:User)-[c:follow]->(b:User)
 		WHERE a.user_id = $id AND b.user_id = $to_id
 		DELETE c
-		SET a.follow = a.follow - 1, b.fans = b.fans - 1`,
+		SET a.follow_count = a.follow_count - 1, b.follower_count = b.follower_count - 1`,
 		map[string]any{
 			"id":    id,
 			"to_id": toId,

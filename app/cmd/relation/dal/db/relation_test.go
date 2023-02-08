@@ -28,16 +28,33 @@ func TestIsFollow(t *testing.T) {
 }
 
 func TestFollow(t *testing.T) {
+	a := assert.New(t)
+
 	ctx := context.Background()
 	err := Follow(ctx, 3, 4)
-	assert.Nil(t, err)
+	a.NoError(err)
 
 	isFollow, err := IsFollow(ctx, 3, 4)
-	assert.Nil(t, err)
-	assert.True(t, isFollow)
+	a.NoError(err)
+	a.True(isFollow)
 
 	err = Follow(ctx, 3, 4)
-	assert.Nil(t, err)
+	a.NoError(err)
+
+	res, err := ListRelation(ctx, 3, FOLLOW)
+	a.NoError(err)
+	a.EqualValues(1, len(res))
+	a.EqualValues(0, res[0].FollowCount)
+	a.EqualValues(1, res[0].FollowerCount)
+
+	err = Follow(ctx, 4, 3)
+	a.NoError(err)
+
+	res, err = ListRelation(ctx, 4, FANS)
+	a.NoError(err)
+	a.EqualValues(1, len(res))
+	a.EqualValues(1, res[0].FollowerCount)
+	a.EqualValues(1, res[0].FollowCount)
 }
 
 func TestUnFollow(t *testing.T) {
