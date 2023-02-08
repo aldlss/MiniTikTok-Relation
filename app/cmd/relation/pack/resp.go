@@ -1,43 +1,16 @@
 package pack
 
 import (
-	"errors"
 	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/relation"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/errno"
+	"github.com/aldlss/MiniTikTok-Relation/app/pkg/pack"
 )
 
-type BaseResp struct {
-	StatusCode int32
-	StatusMsg  string
-}
-
-func buildBaseResp(err error) *BaseResp {
-	if err == nil {
-		return baseResp(errno.Success)
-	}
-
-	e := errno.ErrNo{}
-	if errors.As(err, &e) {
-		return baseResp(e)
-	}
-
-	e = errno.ServiceErr.WriteMsg(err.Error())
-	return baseResp(e)
-}
-
-func baseResp(err errno.ErrNo) *BaseResp {
-	return &BaseResp{
-		StatusCode: err.ErrCode,
-		StatusMsg:  err.ErrMsg,
-	}
-}
-
 func BuildActionResp(err error) *relation.FollowActionResponse {
-	baseResp := buildBaseResp(err)
+	baseResp := pack.BuildBaseResp(err)
 	return actionResp(baseResp)
 }
 
-func actionResp(baseResp *BaseResp) *relation.FollowActionResponse {
+func actionResp(baseResp *pack.BaseResp) *relation.FollowActionResponse {
 	return &relation.FollowActionResponse{
 		StatusCode: baseResp.StatusCode,
 		StatusMsg:  baseResp.StatusMsg,
@@ -45,11 +18,11 @@ func actionResp(baseResp *BaseResp) *relation.FollowActionResponse {
 }
 
 func BuildListFollowResp(followList []*relation.User, err error) *relation.ListFollowResponse {
-	baseResp := buildBaseResp(err)
+	baseResp := pack.BuildBaseResp(err)
 	return listFollowResp(baseResp, followList)
 }
 
-func listFollowResp(baseResp *BaseResp, followList []*relation.User) *relation.ListFollowResponse {
+func listFollowResp(baseResp *pack.BaseResp, followList []*relation.User) *relation.ListFollowResponse {
 	return &relation.ListFollowResponse{
 		StatusCode: baseResp.StatusCode,
 		StatusMsg:  baseResp.StatusMsg,
@@ -58,11 +31,11 @@ func listFollowResp(baseResp *BaseResp, followList []*relation.User) *relation.L
 }
 
 func BuildListFansResp(fansList []*relation.User, err error) *relation.ListFansResponse {
-	baseResp := buildBaseResp(err)
+	baseResp := pack.BuildBaseResp(err)
 	return listFansResp(baseResp, fansList)
 }
 
-func listFansResp(baseResp *BaseResp, fansList []*relation.User) *relation.ListFansResponse {
+func listFansResp(baseResp *pack.BaseResp, fansList []*relation.User) *relation.ListFansResponse {
 	return &relation.ListFansResponse{
 		StatusCode: baseResp.StatusCode,
 		StatusMsg:  baseResp.StatusMsg,
@@ -71,11 +44,11 @@ func listFansResp(baseResp *BaseResp, fansList []*relation.User) *relation.ListF
 }
 
 func BuildListFriendsResp(friendsList []*relation.User, err error) *relation.ListFriendsResponse {
-	baseResp := buildBaseResp(err)
+	baseResp := pack.BuildBaseResp(err)
 	return listFriendsResp(baseResp, friendsList)
 }
 
-func listFriendsResp(baseResp *BaseResp, friendsList []*relation.User) *relation.ListFriendsResponse {
+func listFriendsResp(baseResp *pack.BaseResp, friendsList []*relation.User) *relation.ListFriendsResponse {
 	return &relation.ListFriendsResponse{
 		StatusCode: baseResp.StatusCode,
 		StatusMsg:  baseResp.StatusMsg,
