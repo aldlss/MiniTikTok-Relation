@@ -14,7 +14,7 @@ func init() {
 }
 
 func main() {
-	addr, err := net.ResolveTCPAddr("tcp4", "0.0.0.0:19198")
+	addr, err := net.ResolveTCPAddr("tcp", "[::]:19198")
 	if err != nil {
 		log.Error(err)
 	}

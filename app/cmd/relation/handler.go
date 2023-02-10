@@ -22,7 +22,7 @@ func (s *RelationServiceImpl) FollowAction(ctx context.Context, req *relation.Fo
 
 	err = service.NewFollowActionService(ctx).FollowAction(req)
 	if err != nil {
-		return pack.BuildActionResp(err), err
+		return pack.BuildActionResp(err), nil
 	}
 	return pack.BuildActionResp(errno.Success), nil
 }
@@ -30,7 +30,7 @@ func (s *RelationServiceImpl) FollowAction(ctx context.Context, req *relation.Fo
 func (s *RelationServiceImpl) ListFollow(ctx context.Context, req *relation.ListFollowRequest) (resp *relation.ListFollowResponse, err error) {
 	followList, err := service.NewListFollowService(ctx).ListFollow(req)
 	if err != nil {
-		return pack.BuildListFollowResp(nil, err), err
+		return pack.BuildListFollowResp(nil, err), nil
 	}
 	return pack.BuildListFollowResp(followList, errno.Success), nil
 }
@@ -38,7 +38,7 @@ func (s *RelationServiceImpl) ListFollow(ctx context.Context, req *relation.List
 func (s *RelationServiceImpl) ListFans(ctx context.Context, req *relation.ListFansRequest) (resp *relation.ListFansResponse, err error) {
 	fansList, err := service.NewListFansService(ctx).ListFans(req)
 	if err != nil {
-		return pack.BuildListFansResp(nil, err), err
+		return pack.BuildListFansResp(nil, err), nil
 	}
 	return pack.BuildListFansResp(fansList, errno.Success), nil
 }
@@ -46,7 +46,7 @@ func (s *RelationServiceImpl) ListFans(ctx context.Context, req *relation.ListFa
 func (s *RelationServiceImpl) ListFriends(ctx context.Context, req *relation.ListFriendsRequest) (resp *relation.ListFriendsResponse, err error) {
 	friendsList, err := service.NewListFriendsService(ctx).ListFriends(req)
 	if err != nil {
-		return pack.BuildListFriendsResp(nil, err), err
+		return pack.BuildListFriendsResp(nil, err), nil
 	}
 	return pack.BuildListFriendsResp(friendsList, errno.Success), nil
 }

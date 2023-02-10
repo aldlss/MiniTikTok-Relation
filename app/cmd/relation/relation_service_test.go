@@ -104,7 +104,7 @@ func TestRelationService(t *testing.T) {
 
 func TestMain(m *testing.M) {
 	ctx := context.Background()
-	db.Init()
+
 	session := db.Driver.NewSession(ctx, neo4j.SessionConfig{
 		DatabaseName: "neo4j",
 	})
