@@ -12,7 +12,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"gorm.io/gorm"
+	"os"
 	"sync"
 	"testing"
 	"time"
@@ -61,7 +61,7 @@ func TestMessageService(t *testing.T) {
 		for idx, msg := range resp.MessageList {
 			a.EqualValues(1+addend, msg.FromUserId)
 			addend ^= 1
-			log.Infof("%d %s %d->%d:%s", idx, msg.CreateTime, msg.FromUserId, msg.ToUserId, msg.Content)
+			log.Infof("%d %d %d->%d: %s", idx, msg.CreateTime, msg.FromUserId, msg.ToUserId, msg.Content)
 		}
 		wg.Done()
 	}()
@@ -92,15 +92,15 @@ func TestMessageService(t *testing.T) {
 }
 
 func TestMain(m *testing.M) {
-	err := db.PgDb.Session(&gorm.Session{
-		SkipHooks: true,
-	}).Where("1=1").Delete(&db.Message{}).Error
+	err := os.Setenv("TABLE_PREFIX", "test112_")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
 	go main()
-	time.Sleep(time.Second / 2)
+	for db.PgDb == nil {
+		time.Sleep(time.Millisecond * 5)
+	}
 	m.Run()
 
 	err = db.PgDb.Migrator().DropTable(&db.Message{})

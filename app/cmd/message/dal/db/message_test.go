@@ -5,7 +5,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"gorm.io/gorm"
 	"os"
 	"testing"
 )
@@ -46,13 +45,6 @@ func TestMain(m *testing.M) {
 		log.Fatal(err.Error())
 	}
 	Init()
-
-	err = PgDb.Session(&gorm.Session{
-		SkipHooks: true,
-	}).Where("1=1").Delete(&Message{}).Error
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	m.Run()
 

@@ -73,7 +73,7 @@ func (x *Message) fastReadField4(buf []byte, _type int8) (offset int, err error)
 }
 
 func (x *Message) fastReadField5(buf []byte, _type int8) (offset int, err error) {
-	x.CreateTime, offset, err = fastpb.ReadString(buf, _type)
+	x.CreateTime, offset, err = fastpb.ReadUint64(buf, _type)
 	return offset, err
 }
 
@@ -297,10 +297,10 @@ func (x *Message) fastWriteField4(buf []byte) (offset int) {
 }
 
 func (x *Message) fastWriteField5(buf []byte) (offset int) {
-	if x.CreateTime == "" {
+	if x.CreateTime == 0 {
 		return offset
 	}
-	offset += fastpb.WriteString(buf[offset:], 5, x.CreateTime)
+	offset += fastpb.WriteUint64(buf[offset:], 5, x.CreateTime)
 	return offset
 }
 
@@ -478,10 +478,10 @@ func (x *Message) sizeField4() (n int) {
 }
 
 func (x *Message) sizeField5() (n int) {
-	if x.CreateTime == "" {
+	if x.CreateTime == 0 {
 		return n
 	}
-	n += fastpb.SizeString(5, x.CreateTime)
+	n += fastpb.SizeUint64(5, x.CreateTime)
 	return n
 }
 

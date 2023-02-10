@@ -17,7 +17,7 @@ func Message(dbMessage *db.Message, fromUserid uint32, toUserId uint32) *message
 		ToUserId:   toId,
 		FromUserId: dbMessage.SenderId,
 		Content:    dbMessage.Content,
-		CreateTime: dbMessage.CreatedAt.String(),
+		CreateTime: uint64(dbMessage.CreatedAt.UnixMilli()),
 	}
 }
 

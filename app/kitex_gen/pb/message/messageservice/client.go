@@ -4,7 +4,7 @@ package messageservice
 
 import (
 	"context"
-	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
+	message "github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
 )
