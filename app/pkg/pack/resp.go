@@ -1,7 +1,7 @@
 package pack
 
 import (
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/errno"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
 )
 
 type BaseResp struct {

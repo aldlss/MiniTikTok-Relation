@@ -2,9 +2,9 @@ package rpc
 
 import (
 	"context"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/relation"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/relation/relationservice"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/errno"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation/relationservice"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	log "github.com/sirupsen/logrus"

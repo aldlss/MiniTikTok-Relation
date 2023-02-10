@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/message/dal"
-	message "github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/message/messageservice"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/message/dal"
+	message "github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message/messageservice"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/server"
 	log "github.com/sirupsen/logrus"

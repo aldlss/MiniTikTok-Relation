@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 	"github.com/agiledragon/gomonkey/v2"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/api/handle"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/api/middleware"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/api/rpc"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/auth"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/constants"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/api/handle"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/api/middleware"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/api/rpc"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/auth"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/constants"
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
 )

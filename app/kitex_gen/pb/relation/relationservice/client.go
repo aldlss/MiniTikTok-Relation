@@ -4,7 +4,7 @@ package relationservice
 
 import (
 	"context"
-	relation "github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/relation"
+	relation "github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
 )

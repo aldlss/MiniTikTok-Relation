@@ -4,7 +4,7 @@ package authservice
 
 import (
 	"context"
-	auth "github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/auth"
+	auth "github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/auth"
 	client "github.com/cloudwego/kitex/client"
 	callopt "github.com/cloudwego/kitex/client/callopt"
 )

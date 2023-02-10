@@ -1,4 +1,4 @@
-module github.com/aldlss/MiniTikTok-Relation
+module github.com/aldlss/MiniTikTok-Social-Module
 
 go 1.19
 

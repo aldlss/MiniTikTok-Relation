@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/message/dal/db"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/message"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/message/messageservice"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/errno"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/message/dal/db"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message/messageservice"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
 	"github.com/cloudwego/kitex/client"
 	"github.com/cloudwego/kitex/pkg/rpcinfo"
 	"github.com/cloudwego/kitex/transport"
@@ -99,7 +99,7 @@ func TestMain(m *testing.M) {
 		log.Fatal(err.Error())
 	}
 
-	//go main()
+	go main()
 	time.Sleep(time.Second / 2)
 	m.Run()
 

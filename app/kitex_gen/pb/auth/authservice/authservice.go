@@ -5,7 +5,7 @@ package authservice
 import (
 	"context"
 	"fmt"
-	auth "github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/auth"
+	auth "github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/auth"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 	streaming "github.com/cloudwego/kitex/pkg/streaming"

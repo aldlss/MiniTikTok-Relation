@@ -5,7 +5,7 @@ package messageservice
 import (
 	"context"
 	"fmt"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/message"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
 	client "github.com/cloudwego/kitex/client"
 	kitex "github.com/cloudwego/kitex/pkg/serviceinfo"
 	streaming "github.com/cloudwego/kitex/pkg/streaming"

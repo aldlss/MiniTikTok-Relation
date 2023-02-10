@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/relation/dal/db"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/relation/pack"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/relation"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/dal/db"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/pack"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
 )
 
 type ListFansService struct {

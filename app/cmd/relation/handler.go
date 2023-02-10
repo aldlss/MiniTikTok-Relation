@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/relation/pack"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/relation/service"
-	relation "github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/relation"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/errno"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/pack"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/service"
+	relation "github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
 )
 
 // RelationServiceImpl implements the last service interface defined in the IDL.

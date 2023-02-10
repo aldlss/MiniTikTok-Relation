@@ -1,7 +1,7 @@
 package pack
 
 import (
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/relation/model"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/model"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 )
 

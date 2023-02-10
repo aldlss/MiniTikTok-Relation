@@ -2,7 +2,7 @@
 package messageservice
 
 import (
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/message"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
 	server "github.com/cloudwego/kitex/server"
 )
 

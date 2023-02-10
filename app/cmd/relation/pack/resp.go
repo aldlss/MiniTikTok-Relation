@@ -1,8 +1,8 @@
 package pack
 
 import (
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/relation"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/pack"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/pack"
 )
 
 func BuildActionResp(err error) *relation.FollowActionResponse {

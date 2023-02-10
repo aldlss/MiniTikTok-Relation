@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/message/dal/db"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/message"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/errno"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/message/dal/db"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
 )
 
 type ChatActionService struct {

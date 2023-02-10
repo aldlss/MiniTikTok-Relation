@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/message/pack"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/message/service"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/message"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/errno"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/message/pack"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/message/service"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
 	log "github.com/sirupsen/logrus"
 )
 

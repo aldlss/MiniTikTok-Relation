@@ -1,8 +1,8 @@
 package pack
 
 import (
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/message/dal/db"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/message"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/message/dal/db"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
 )
 
 func Message(dbMessage *db.Message, fromUserid uint32, toUserId uint32) *message.Message {

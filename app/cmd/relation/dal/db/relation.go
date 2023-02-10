@@ -3,9 +3,9 @@ package db
 import (
 	"context"
 	"fmt"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/relation/model"
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/relation/pack"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/errno"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/model"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/pack"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	log "github.com/sirupsen/logrus"
 )

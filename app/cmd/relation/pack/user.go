@@ -1,8 +1,8 @@
 package pack
 
 import (
-	"github.com/aldlss/MiniTikTok-Relation/app/cmd/relation/model"
-	"github.com/aldlss/MiniTikTok-Relation/app/kitex_gen/pb/relation"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/model"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
 )
 
 func User(dbUser *model.User, isFollow bool) *relation.User {

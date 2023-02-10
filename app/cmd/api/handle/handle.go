@@ -1,8 +1,8 @@
 package handle
 
 import (
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/constants"
-	"github.com/aldlss/MiniTikTok-Relation/app/pkg/pack"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/constants"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/pack"
 	"github.com/cloudwego/hertz/pkg/app"
 )
 
