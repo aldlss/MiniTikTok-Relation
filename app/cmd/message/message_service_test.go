@@ -12,6 +12,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gorm.io/gorm"
 	"os"
 	"sync"
 	"testing"
@@ -92,18 +93,26 @@ func TestMessageService(t *testing.T) {
 }
 
 func TestMain(m *testing.M) {
-	err := os.Setenv("TABLE_PREFIX", "test112_")
+	err := os.Setenv("TABLE_NAME", "test112_message")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
 	go main()
 	for db.PgDb == nil {
-		time.Sleep(time.Millisecond * 5)
+		time.Sleep(time.Millisecond * 500)
 	}
+
+	err = db.PgDb.Session(&gorm.Session{
+		SkipHooks: true,
+	}).Where("1=1").Delete(db.Message{}).Error
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	m.Run()
 
-	err = db.PgDb.Migrator().DropTable(&db.Message{})
+	err = db.PgDb.Migrator().DropTable(os.Getenv("TABLE_NAME"))
 	if err != nil {
 		log.Fatal(err.Error())
 	}

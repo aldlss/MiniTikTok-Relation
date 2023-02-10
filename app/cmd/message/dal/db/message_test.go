@@ -5,6 +5,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"gorm.io/gorm"
 	"os"
 	"testing"
 )
@@ -40,15 +41,22 @@ func TestArrange(t *testing.T) {
 
 func TestMain(m *testing.M) {
 	// 使用一个没有应该没有人用的表 test 测试
-	err := os.Setenv("TABLE_PREFIX", "test111_")
+	err := os.Setenv("TABLE_NAME", "test111_message")
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	Init()
 
+	err = PgDb.Session(&gorm.Session{
+		SkipHooks: true,
+	}).Where("1=1").Delete(&Message{}).Error
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	m.Run()
 
-	err = PgDb.Migrator().DropTable(&Message{})
+	err = PgDb.Migrator().DropTable(os.Getenv("TABLE_NAME"))
 	if err != nil {
 		log.Fatal(err.Error())
 	}

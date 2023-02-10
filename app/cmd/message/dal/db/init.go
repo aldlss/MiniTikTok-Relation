@@ -5,7 +5,6 @@ import (
 	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
 	"os"
 )
 
@@ -21,13 +20,16 @@ func Init() {
 		PreferSimpleProtocol: true,
 	}), &gorm.Config{
 		SkipDefaultTransaction: true,
-		NamingStrategy: &schema.NamingStrategy{
-			TablePrefix: os.Getenv("TABLE_PREFIX"),
-		},
 	})
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+
+	tableName := os.Getenv("TABLE_NAME")
+	if tableName == "" {
+		log.Fatal("TABLE_NAME can't be empty")
+	}
+	db = db.Table(tableName)
 
 	err = db.Migrator().AutoMigrate(&Message{})
 	if err != nil {
