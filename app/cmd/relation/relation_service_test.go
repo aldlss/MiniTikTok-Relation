@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/dal/db"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/model"
 	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
 	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation/relationservice"
 	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
@@ -12,6 +13,7 @@ import (
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
+	"gorm.io/gorm"
 	"sync"
 	"testing"
 	"time"
@@ -73,6 +75,8 @@ func TestRelationService(t *testing.T) {
 		assert.Zero(t, listFriResp.StatusCode)
 		assert.Equal(t, 1, len(listFriResp.UserList))
 		assert.True(t, listFriResp.UserList[0].IsFollow)
+		assert.EqualValues(t, 1, listFriResp.UserList[0].MsgType)
+		assert.Equal(t, "I agree with you!", listFriResp.UserList[0].Message)
 		wg.Done()
 	}()
 	wg.Wait()
@@ -105,8 +109,9 @@ func TestRelationService(t *testing.T) {
 func TestMain(m *testing.M) {
 	ctx := context.Background()
 
-	go main()
-	for db.Driver == nil {
+	Init()
+	//go main()
+	for db.Driver == nil || db.PgDb == nil {
 		time.Sleep(time.Millisecond / 2)
 	}
 
@@ -133,6 +138,34 @@ func TestMain(m *testing.M) {
 		return
 	}
 
+	err = db.PgDb.Migrator().AutoMigrate(&model.Message{})
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	err = db.PgDb.Session(&gorm.Session{
+		SkipHooks: true,
+	}).Where("chat_id = ?", 12<<32|13).Or("chat_id = ?", 13<<32|12).
+		Delete(&model.Message{}).Error
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = db.PgDb.Create(&model.Message{
+		ChatId:   12<<32 | 13,
+		Content:  "Aya, yes!",
+		SenderId: 12,
+	}).Create(&model.Message{
+		ChatId:   12<<32 | 13,
+		Content:  "I agree with you!",
+		SenderId: 13,
+	}).Create(&model.Message{
+		ChatId:   13<<32 | 12,
+		Content:  "Thank you!",
+		SenderId: 13,
+	}).Error
+	if err != nil {
+		log.Fatal()
+	}
+
 	m.Run()
 
 	_, err = session.Run(ctx, `
@@ -143,6 +176,14 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Error(err.Error())
 		return
+	}
+
+	err = db.PgDb.Session(&gorm.Session{
+		SkipHooks: true,
+	}).Where("chat_id = ?", 12<<32|13).Or("chat_id = ?", 13<<32|12).
+		Delete(&model.Message{}).Error
+	if err != nil {
+		log.Error(err.Error())
 	}
 
 	err = session.Close(ctx)

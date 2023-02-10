@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/pack"
 	"github.com/aldlss/MiniTikTok-Social-Module/app/cmd/relation/service"
-	relation "github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
+	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/relation"
 	"github.com/aldlss/MiniTikTok-Social-Module/app/pkg/errno"
 )
 

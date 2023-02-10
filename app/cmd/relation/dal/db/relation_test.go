@@ -3,141 +3,140 @@ package db
 import (
 	"context"
 	"github.com/neo4j/neo4j-go-driver/v5/neo4j"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 	"sync"
 	"testing"
 )
 
-func TestIsFollow(t *testing.T) {
-	ctx := context.Background()
+type testRelation struct {
+	suite.Suite
+	session neo4j.SessionWithContext
+	ctx     context.Context
+}
+
+func (s *testRelation) testIsFollow() {
 	wg := sync.WaitGroup{}
 	wg.Add(2)
 	go func() {
-		isFollow, err := IsFollow(ctx, 1, 2)
-		assert.Nil(t, err)
-		assert.False(t, isFollow)
+		isFollow, err := IsFollow(s.ctx, 1, 2)
+		s.NoError(err)
+		s.False(isFollow)
 		wg.Done()
 	}()
 	go func() {
-		isFollow, err := IsFollow(ctx, 5, 6)
-		assert.Nil(t, err)
-		assert.True(t, isFollow)
+		isFollow, err := IsFollow(s.ctx, 5, 6)
+		s.NoError(err)
+		s.True(isFollow)
 		wg.Done()
 	}()
 	wg.Wait()
 }
 
-func TestFollow(t *testing.T) {
-	a := assert.New(t)
+func (s *testRelation) TestFollow() {
+	err := Follow(s.ctx, 3, 4)
+	s.NoError(err)
 
-	ctx := context.Background()
-	err := Follow(ctx, 3, 4)
-	a.NoError(err)
+	isFollow, err := IsFollow(s.ctx, 3, 4)
+	s.NoError(err)
+	s.True(isFollow)
 
-	isFollow, err := IsFollow(ctx, 3, 4)
-	a.NoError(err)
-	a.True(isFollow)
+	err = Follow(s.ctx, 3, 4)
+	s.NoError(err)
 
-	err = Follow(ctx, 3, 4)
-	a.NoError(err)
+	res, err := ListRelation(s.ctx, 3, FOLLOW)
+	s.NoError(err)
+	s.EqualValues(1, len(res))
+	s.EqualValues(0, res[0].FollowCount)
+	s.EqualValues(1, res[0].FollowerCount)
 
-	res, err := ListRelation(ctx, 3, FOLLOW)
-	a.NoError(err)
-	a.EqualValues(1, len(res))
-	a.EqualValues(0, res[0].FollowCount)
-	a.EqualValues(1, res[0].FollowerCount)
+	err = Follow(s.ctx, 4, 3)
+	s.NoError(err)
 
-	err = Follow(ctx, 4, 3)
-	a.NoError(err)
-
-	res, err = ListRelation(ctx, 4, FANS)
-	a.NoError(err)
-	a.EqualValues(1, len(res))
-	a.EqualValues(1, res[0].FollowerCount)
-	a.EqualValues(1, res[0].FollowCount)
+	res, err = ListRelation(s.ctx, 4, FANS)
+	s.NoError(err)
+	s.EqualValues(1, len(res))
+	s.EqualValues(1, res[0].FollowerCount)
+	s.EqualValues(1, res[0].FollowCount)
 }
 
-func TestUnFollow(t *testing.T) {
-	ctx := context.Background()
-	err := UnFollow(ctx, 7, 8)
-	assert.Nil(t, err)
+func (s *testRelation) TestUnFollow() {
+	err := UnFollow(s.ctx, 7, 8)
+	s.NoError(err)
 
-	isFollow, err := IsFollow(ctx, 7, 8)
-	assert.Nil(t, err)
-	assert.False(t, isFollow)
+	isFollow, err := IsFollow(s.ctx, 7, 8)
+	s.NoError(err)
+	s.False(isFollow)
 
-	err = UnFollow(ctx, 7, 8)
-	assert.Nil(t, err)
+	err = UnFollow(s.ctx, 7, 8)
+	s.NoError(err)
 }
 
-func TestListRelation(t *testing.T) {
-	ctx := context.Background()
+func (s *testRelation) TestListRelation() {
 	wg := sync.WaitGroup{}
 	wg.Add(3)
 	go func() {
-		res, err := ListRelation(ctx, 1, FOLLOW)
-		assert.Nil(t, err)
-		assert.Equal(t, 1, len(res))
-		assert.Equal(t, uint32(5), res[0].Id)
+		res, err := ListRelation(s.ctx, 1, FOLLOW)
+		s.NoError(err)
+		s.Equal(1, len(res))
+		s.EqualValues(5, res[0].Id)
 		wg.Done()
 	}()
 
 	go func() {
-		res, err := ListRelation(ctx, 5, FANS)
-		assert.Nil(t, err)
-		assert.Equal(t, 2, len(res))
-		assert.Equal(t, uint32(6^1), res[0].Id^res[1].Id)
+		res, err := ListRelation(s.ctx, 5, FANS)
+		s.NoError(err)
+		s.Equal(2, len(res))
+		s.EqualValues(6^1, res[0].Id^res[1].Id)
 		wg.Done()
 	}()
 
 	go func() {
-		res, err := ListRelation(ctx, 5, FRIENDS)
-		assert.Nil(t, err)
-		assert.Equal(t, 1, len(res))
-		assert.Equal(t, uint32(6), res[0].Id)
+		res, err := ListRelation(s.ctx, 5, FRIENDS)
+		s.NoError(err)
+		s.Equal(1, len(res))
+		s.EqualValues(6, res[0].Id)
 		wg.Done()
 	}()
 
 	wg.Wait()
 }
 
-func TestListRelationWithUserFollow(t *testing.T) {
-	ctx := context.Background()
+func (s *testRelation) TestListRelationWithUserFollow() {
 	wg := sync.WaitGroup{}
 	wg.Add(3)
 	go func() {
-		res, err := ListRelationWithUserFollow(ctx, 5, 5, FANS)
-		assert.Nil(t, err)
-		assert.Equal(t, 1, len(res))
-		assert.Equal(t, uint32(6), res[0].Id)
+		res, err := ListRelationWithUserFollow(s.ctx, 5, 5, FANS)
+		s.NoError(err)
+		s.Equal(1, len(res))
+		s.EqualValues(6, res[0].Id)
 		wg.Done()
 	}()
 
 	go func() {
-		res, err := ListRelationWithUserFollow(ctx, 6, 1, FOLLOW)
-		assert.Nil(t, err)
-		assert.Equal(t, 1, len(res))
-		assert.Equal(t, uint32(5), res[0].Id)
+		res, err := ListRelationWithUserFollow(s.ctx, 6, 1, FOLLOW)
+		s.NoError(err)
+		s.Equal(1, len(res))
+		s.EqualValues(5, res[0].Id)
 		wg.Done()
 	}()
 
 	go func() {
-		res, err := ListRelationWithUserFollow(ctx, 1, 6, FRIENDS)
-		assert.Nil(t, err)
-		assert.Equal(t, 1, len(res))
-		assert.Equal(t, uint32(5), res[0].Id)
+		res, err := ListRelationWithUserFollow(s.ctx, 1, 6, FRIENDS)
+		s.NoError(err)
+		s.Equal(1, len(res))
+		s.EqualValues(5, res[0].Id)
 		wg.Done()
 	}()
 
 	wg.Wait()
 }
 
-func TestMain(m *testing.M) {
-	Init()
+func (s *testRelation) SetupSuite() {
+	initNeo4j()
 
-	ctx := context.Background()
-	session := Driver.NewSession(ctx, neo4j.SessionConfig{DatabaseName: "neo4j"})
-	_, err := session.Run(ctx, `
+	s.ctx = context.Background()
+	session := Driver.NewSession(s.ctx, neo4j.SessionConfig{DatabaseName: "neo4j"})
+	_, err := session.Run(s.ctx, `
 		MATCH (a:User)
 		WHERE a.name="aya" OR a.name="satori" OR a.name="remilia" OR a.name="koishi"
 		OR a.name="reimu" OR a.name="marisa" OR a.name="momiji" OR a.name="hatate"
@@ -148,8 +147,8 @@ func TestMain(m *testing.M) {
 		return
 	}
 
-	_, err = session.ExecuteWrite(ctx, func(tx neo4j.ManagedTransaction) (any, error) {
-		_, err := tx.Run(ctx, `
+	_, err = session.ExecuteWrite(s.ctx, func(tx neo4j.ManagedTransaction) (any, error) {
+		_, err := tx.Run(s.ctx, `
 			CREATE (c:User{user_id:1,follower_count:0,follow_count:0,name:"aya"}),
 			(:User{user_id:2,follower_count:0,follow_count:0,name:"satori"}),
 			(:User{user_id:3,follower_count:0,follow_count:0,name:"remilia"}),
@@ -170,10 +169,11 @@ func TestMain(m *testing.M) {
 		println(err.Error())
 		return
 	}
+	s.session = session
+}
 
-	m.Run()
-
-	_, err = session.Run(ctx, `
+func (s *testRelation) TearDownSuite() {
+	_, err := s.session.Run(s.ctx, `
 		MATCH (a:User)
 		WHERE a.name="aya" OR a.name="satori" OR a.name="remilia" OR a.name="koishi"
 		OR a.name="reimu" OR a.name="marisa" OR a.name="momiji" OR a.name="hatate"
@@ -184,9 +184,13 @@ func TestMain(m *testing.M) {
 		return
 	}
 
-	err = session.Close(ctx)
+	err = s.session.Close(s.ctx)
 	if err != nil {
 		println(err.Error())
 		return
 	}
+}
+
+func TestRelationDb(t *testing.T) {
+	suite.Run(t, new(testRelation))
 }

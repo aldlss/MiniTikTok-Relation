@@ -5,4 +5,5 @@ type User struct {
 	Name          string
 	FollowCount   uint32
 	FollowerCount uint32
+	Avatar        string
 }

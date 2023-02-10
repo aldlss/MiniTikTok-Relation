@@ -20,26 +20,26 @@ func TestUser(t *testing.T) {
 
 func TestUsers(t *testing.T) {
 	users := Users([]*model.User{
-		&model.User{
+		{
 			Id:            1,
 			Name:          "Aya",
 			FollowCount:   1111,
 			FollowerCount: 2222,
 		},
-		&model.User{
+		{
 			Id:            5,
 			Name:          "Satori",
 			FollowCount:   5555,
 			FollowerCount: 1111,
 		},
-		&model.User{
+		{
 			Id:            9,
 			Name:          "Cirno",
 			FollowCount:   9,
 			FollowerCount: 9,
 		},
 	}, []*model.User{
-		&model.User{
+		{
 			Id:            5,
 			Name:          "Satori",
 			FollowCount:   5555,

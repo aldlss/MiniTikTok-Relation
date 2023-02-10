@@ -43,12 +43,12 @@ func listFansResp(baseResp *pack.BaseResp, fansList []*relation.User) *relation.
 	}
 }
 
-func BuildListFriendsResp(friendsList []*relation.User, err error) *relation.ListFriendsResponse {
+func BuildListFriendsResp(friendsList []*relation.FriendUser, err error) *relation.ListFriendsResponse {
 	baseResp := pack.BuildBaseResp(err)
 	return listFriendsResp(baseResp, friendsList)
 }
 
-func listFriendsResp(baseResp *pack.BaseResp, friendsList []*relation.User) *relation.ListFriendsResponse {
+func listFriendsResp(baseResp *pack.BaseResp, friendsList []*relation.FriendUser) *relation.ListFriendsResponse {
 	return &relation.ListFriendsResponse{
 		StatusCode: baseResp.StatusCode,
 		StatusMsg:  baseResp.StatusMsg,

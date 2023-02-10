@@ -12,6 +12,7 @@ func User(dbUser *model.User, isFollow bool) *relation.User {
 		FollowCount:   dbUser.FollowCount,
 		FollowerCount: dbUser.FollowerCount,
 		IsFollow:      isFollow,
+		Avatar:        dbUser.Avatar,
 	}
 }
 
@@ -25,13 +26,7 @@ func Users(dbUsers []*model.User, followList []*model.User) []*relation.User {
 	users := make([]*relation.User, len(dbUsers))
 	for idx, dbUser := range dbUsers {
 		_, isFollow := followSet[dbUser.Id]
-		users[idx] = &relation.User{
-			Id:            dbUser.Id,
-			Name:          dbUser.Name,
-			FollowCount:   dbUser.FollowCount,
-			FollowerCount: dbUser.FollowerCount,
-			IsFollow:      isFollow,
-		}
+		users[idx] = User(dbUser, isFollow)
 	}
 	return users
 }

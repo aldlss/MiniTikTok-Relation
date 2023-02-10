@@ -12,6 +12,10 @@ func DbUser(record *neo4j.Record) *model.User {
 	name, isExist2 := m["name"]
 	followCount, isExist3 := m["follow_count"]
 	followerCount, isExist4 := m["follower_count"]
+	avatar, isExist5 := m["avatar"]
+	if !isExist5 {
+		avatar = ""
+	}
 	if !(isExist1 && isExist2 && isExist3 && isExist4) {
 		return nil
 	}
@@ -21,6 +25,7 @@ func DbUser(record *neo4j.Record) *model.User {
 		Name:          name.(string),
 		FollowCount:   uint32(followCount.(int64)),
 		FollowerCount: uint32(followerCount.(int64)),
+		Avatar:        avatar.(string),
 	}
 }
 
