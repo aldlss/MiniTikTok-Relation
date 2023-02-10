@@ -105,6 +105,11 @@ func TestRelationService(t *testing.T) {
 func TestMain(m *testing.M) {
 	ctx := context.Background()
 
+	go main()
+	for db.Driver == nil {
+		time.Sleep(time.Millisecond / 2)
+	}
+
 	session := db.Driver.NewSession(ctx, neo4j.SessionConfig{
 		DatabaseName: "neo4j",
 	})
@@ -128,8 +133,6 @@ func TestMain(m *testing.M) {
 		return
 	}
 
-	go main()
-	time.Sleep(time.Second / 2)
 	m.Run()
 
 	_, err = session.Run(ctx, `

@@ -9,11 +9,12 @@ import (
 	"net"
 )
 
-func init() {
+func Init() {
 	dal.Init()
 }
 
 func main() {
+	Init()
 	addr, err := net.ResolveTCPAddr("tcp", "[::]:19198")
 	if err != nil {
 		log.Error(err)
