@@ -6,6 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/suite"
 	"gorm.io/gorm"
+	"os"
 	"sync"
 	"testing"
 )
@@ -36,16 +37,19 @@ func (s *testChatExtend) TestGetFriendExtend() {
 }
 
 func (s *testChatExtend) SetupSuite() {
+	err := os.Setenv("TABLE_NAME", "testRelation111_message")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 	initPgsql()
 
-	err := PgDb.Migrator().AutoMigrate(&model.Message{})
+	err = PgDb.Migrator().AutoMigrate(&model.Message{})
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	err = PgDb.Session(&gorm.Session{
 		SkipHooks: true,
-	}).Where("chat_id = 3").Or("chat_id = 5").
-		Delete(&model.Message{}).Error
+	}).Where("1=1").Delete(&model.Message{}).Error
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -69,10 +73,7 @@ func (s *testChatExtend) SetupSuite() {
 }
 
 func (s *testChatExtend) TearDownSuite() {
-	err := PgDb.Session(&gorm.Session{
-		SkipHooks: true,
-	}).Where("chat_id = 3").Or("chat_id = 5").
-		Delete(&model.Message{}).Error
+	err := PgDb.Migrator().DropTable(os.Getenv("TABLE_NAME"))
 	if err != nil {
 		log.Error(err.Error())
 	}

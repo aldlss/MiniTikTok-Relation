@@ -14,6 +14,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
+	"os"
 	"sync"
 	"testing"
 	"time"
@@ -108,9 +109,13 @@ func TestRelationService(t *testing.T) {
 
 func TestMain(m *testing.M) {
 	ctx := context.Background()
+	err := os.Setenv("TABLE_NAME", "testRelation112_message")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
-	Init()
-	//go main()
+	//Init()
+	go main()
 	for db.Driver == nil || db.PgDb == nil {
 		time.Sleep(time.Millisecond / 2)
 	}
@@ -118,7 +123,7 @@ func TestMain(m *testing.M) {
 	session := db.Driver.NewSession(ctx, neo4j.SessionConfig{
 		DatabaseName: "neo4j",
 	})
-	_, err := session.Run(ctx, `
+	_, err = session.Run(ctx, `
 		MATCH (a:User)
 		WHERE a.name="ayaa" OR a.name="satoria" OR a.name="remiliaa" OR a.name="koishia"
 		DETACH DELETE a`,
@@ -144,8 +149,7 @@ func TestMain(m *testing.M) {
 	}
 	err = db.PgDb.Session(&gorm.Session{
 		SkipHooks: true,
-	}).Where("chat_id = ?", 12<<32|13).Or("chat_id = ?", 13<<32|12).
-		Delete(&model.Message{}).Error
+	}).Where("1=1").Delete(&model.Message{}).Error
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -178,10 +182,7 @@ func TestMain(m *testing.M) {
 		return
 	}
 
-	err = db.PgDb.Session(&gorm.Session{
-		SkipHooks: true,
-	}).Where("chat_id = ?", 12<<32|13).Or("chat_id = ?", 13<<32|12).
-		Delete(&model.Message{}).Error
+	err = db.PgDb.Migrator().DropTable(os.Getenv("TABLE_NAME"))
 	if err != nil {
 		log.Error(err.Error())
 	}
