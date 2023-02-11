@@ -26,6 +26,10 @@ func main() {
 	relationGroup.POST("/action", handle.RelationFollowAction)
 	relationGroup.GET("/:relation/list", handle.RelationList)
 
+	messageGroup := tiktokGroup.Group("/message")
+	messageGroup.POST("/action", handle.MessageAction)
+	messageGroup.GET("/chat", handle.MessageChat)
+
 	r.NoRoute(func(c context.Context, ctx *app.RequestContext) {
 		ctx.Status(constants.NotFound)
 	})
