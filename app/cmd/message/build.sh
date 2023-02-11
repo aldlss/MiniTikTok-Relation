@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-RUN_NAME="Message"
+RUN_NAME="message"
 
 mkdir -p output/bin
 cp script/* output/

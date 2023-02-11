@@ -1,4 +1,4 @@
-# MiniTikTok-MESSAGE
+# MiniTikTok-Message
 
 ## 环境变量
 
