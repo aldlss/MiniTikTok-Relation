@@ -45,7 +45,8 @@ func Follow(ctx context.Context, id uint32, toId uint32) error {
 	tra, err := session.BeginTransaction(ctx, func(config *neo4j.TransactionConfig) {})
 
 	res, err = tra.Run(ctx, `
-		MATCH (a:User), (b:User)
+		MATCH (a:User)
+		MATCH (b:User)
 		WHERE a.user_id = $id AND b.user_id = $to_id
 		MERGE (a)-[r:follow]->(b)
 		RETURN r`,
@@ -63,7 +64,8 @@ func Follow(ctx context.Context, id uint32, toId uint32) error {
 	}
 
 	res, err = tra.Run(ctx, `
-		MATCH (a:User), (b:User)
+		MATCH (a:User)
+		MATCH (b:User)
 		WHERE a.user_id = $id AND b.user_id = $to_id
 		SET a.follow_count = a.follow_count + 1, b.follower_count = b.follower_count + 1`,
 		map[string]any{
@@ -162,7 +164,7 @@ func ListRelation(ctx context.Context, toId uint32, relationType relationType) (
 			RETURN a`
 	case FRIENDS:
 		cypher = `
-			MATCH (a:User)-[:follow]->(b:User), (b:User)-[:follow]->(a:User)
+			MATCH (a:User)-[:follow]->(b:User)-[:follow]->(a:User)
 			WHERE b.user_id = $to_id
 			RETURN a`
 	default:
@@ -196,17 +198,19 @@ func ListRelationWithUserFollow(ctx context.Context, id uint32, toId uint32, rel
 	switch relationType {
 	case FOLLOW:
 		cypher = `
-			MATCH (a:User)-[:follow]->(b:User), (c:User)-[:follow]->(b:User)
+			MATCH (a:User)-[:follow]->(b:User)
+			MATCH (c:User)-[:follow]->(b:User)
 			WHERE a.user_id = $to_id AND c.user_id = $id
 			RETURN b`
 	case FANS:
 		cypher = `
-			MATCH (a:User)-[:follow]->(b:User), (c:User)-[:follow]->(a:User)
+			MATCH (c:User)-[:follow]->(a:User)-[:follow]->(b:User)
 			WHERE b.user_id = $to_id AND c.user_id = $id
 			RETURN a`
 	case FRIENDS:
 		cypher = `
-			MATCH (a:User)-[:follow]->(b:User), (b:User)-[:follow]->(a:User), (c:User)-[:follow]->(a:User)
+			MATCH (a:User)-[:follow]->(b:User)-[:follow]->(a:User)
+			MATCH (c:User)-[:follow]->(a:User)
 			WHERE b.user_id = $to_id AND c.user_id = $id
 			RETURN a`
 	default:
