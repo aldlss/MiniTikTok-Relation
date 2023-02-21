@@ -16,16 +16,43 @@ func DbUser(record *neo4j.Record) *model.User {
 	if !isExist5 {
 		avatar = ""
 	}
+	backgroundImage, isExist6 := m["background_image"]
+	if !isExist6 {
+		backgroundImage = ""
+	}
+
+	signature, isExist7 := m["signature"]
+	if !isExist7 {
+		signature = ""
+	}
+	totalFavorited, isExist8 := m["total_favorited"]
+	if !isExist8 {
+		totalFavorited = int64(0)
+	}
+	workCount, isExist9 := m["work_count"]
+	if !isExist9 {
+		workCount = int64(0)
+	}
+	favoriteCount, isExist10 := m["favorite_count"]
+	if !isExist10 {
+		favoriteCount = int64(0)
+	}
+
 	if !(isExist1 && isExist2 && isExist3 && isExist4) {
 		return nil
 	}
 
 	return &model.User{
-		Id:            uint32(id.(int64)),
-		Name:          name.(string),
-		FollowCount:   uint32(followCount.(int64)),
-		FollowerCount: uint32(followerCount.(int64)),
-		Avatar:        avatar.(string),
+		Id:              id.(int64),
+		Name:            name.(string),
+		FollowCount:     followCount.(int64),
+		FollowerCount:   followerCount.(int64),
+		Avatar:          avatar.(string),
+		BackgroundImage: backgroundImage.(string),
+		Signature:       signature.(string),
+		TotalFavorited:  totalFavorited.(int64),
+		WorkCount:       workCount.(int64),
+		FavoriteCount:   favoriteCount.(int64),
 	}
 }
 

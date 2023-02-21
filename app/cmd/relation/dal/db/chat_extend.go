@@ -6,14 +6,14 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetFriendExtend(ctx context.Context, fromUserId uint32, toUserId uint32) (*model.ChatExtend, error) {
+func GetFriendExtend(ctx context.Context, fromUserId int64, toUserId int64) (*model.ChatExtend, error) {
 	if fromUserId > toUserId {
 		fromUserId, toUserId = toUserId, fromUserId
 	}
-	return getChatExtend(ctx, uint64(fromUserId)<<32|uint64(toUserId))
+	return getChatExtend(ctx, (fromUserId<<32)^(toUserId))
 }
 
-func getChatExtend(ctx context.Context, chatId uint64) (*model.ChatExtend, error) {
+func getChatExtend(ctx context.Context, chatId int64) (*model.ChatExtend, error) {
 	chatExtend := &model.ChatExtend{}
 	err := PgDb.Session(&gorm.Session{
 		SkipHooks: true,

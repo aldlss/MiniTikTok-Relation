@@ -141,7 +141,7 @@ func TestRelationApi(t *testing.T) {
 	}()
 	go func() {
 		status, body, err := cli.Get(ctx, nil,
-			baseUrl+"/douyin/message/chat?to_user_id=14&token=satori")
+			baseUrl+"/douyin/message/chat?to_user_id=14&token=satori&pre_msg_time=114514")
 		a.NoError(err)
 		a.Equal(constants.OK, status)
 

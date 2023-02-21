@@ -20,7 +20,7 @@ const (
 	FRIENDS
 )
 
-func Follow(ctx context.Context, id uint32, toId uint32) error {
+func Follow(ctx context.Context, id int64, toId int64) error {
 	session := Driver.NewSession(ctx, neo4j.SessionConfig{
 		AccessMode:   neo4j.AccessModeWrite,
 		DatabaseName: DatabaseName})
@@ -102,7 +102,7 @@ func Follow(ctx context.Context, id uint32, toId uint32) error {
 	return nil
 }
 
-func UnFollow(ctx context.Context, id uint32, toId uint32) error {
+func UnFollow(ctx context.Context, id int64, toId int64) error {
 	session := Driver.NewSession(ctx, neo4j.SessionConfig{
 		AccessMode:   neo4j.AccessModeWrite,
 		DatabaseName: DatabaseName})
@@ -145,7 +145,7 @@ func UnFollow(ctx context.Context, id uint32, toId uint32) error {
 	return nil
 }
 
-func ListRelation(ctx context.Context, toId uint32, relationType relationType) ([]*model.User, error) {
+func ListRelation(ctx context.Context, toId int64, relationType relationType) ([]*model.User, error) {
 	session := Driver.NewSession(ctx, neo4j.SessionConfig{
 		DatabaseName: DatabaseName,
 	})
@@ -189,7 +189,7 @@ func ListRelation(ctx context.Context, toId uint32, relationType relationType) (
 	return pack.DbUsers(records.([]*neo4j.Record)), nil
 }
 
-func ListRelationWithUserFollow(ctx context.Context, id uint32, toId uint32, relationType relationType) ([]*model.User, error) {
+func ListRelationWithUserFollow(ctx context.Context, id int64, toId int64, relationType relationType) ([]*model.User, error) {
 	session := Driver.NewSession(ctx, neo4j.SessionConfig{
 		DatabaseName: DatabaseName,
 	})
@@ -235,7 +235,7 @@ func ListRelationWithUserFollow(ctx context.Context, id uint32, toId uint32, rel
 	return pack.DbUsers(records.([]*neo4j.Record)), nil
 }
 
-func IsFollow(ctx context.Context, id uint32, toId uint32) (bool, error) {
+func IsFollow(ctx context.Context, id int64, toId int64) (bool, error) {
 	session := Driver.NewSession(ctx, neo4j.SessionConfig{
 		DatabaseName: DatabaseName,
 	})

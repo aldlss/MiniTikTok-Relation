@@ -108,7 +108,7 @@ func (x *AuthResponse) fastReadField1(buf []byte, _type int8) (offset int, err e
 }
 
 func (x *AuthResponse) fastReadField2(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadUint32(buf, _type)
+	x.UserId, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -158,7 +158,7 @@ func (x *TokenResponse) fastReadField2(buf []byte, _type int8) (offset int, err 
 }
 
 func (x *TokenResponse) fastReadField3(buf []byte, _type int8) (offset int, err error) {
-	x.UserId, offset, err = fastpb.ReadUint32(buf, _type)
+	x.UserId, offset, err = fastpb.ReadInt64(buf, _type)
 	return offset, err
 }
 
@@ -224,7 +224,7 @@ func (x *AuthResponse) fastWriteField2(buf []byte) (offset int) {
 	if x.UserId == 0 {
 		return offset
 	}
-	offset += fastpb.WriteUint32(buf[offset:], 2, x.UserId)
+	offset += fastpb.WriteInt64(buf[offset:], 2, x.UserId)
 	return offset
 }
 
@@ -258,7 +258,7 @@ func (x *TokenResponse) fastWriteField3(buf []byte) (offset int) {
 	if x.UserId == 0 {
 		return offset
 	}
-	offset += fastpb.WriteUint32(buf[offset:], 3, x.UserId)
+	offset += fastpb.WriteInt64(buf[offset:], 3, x.UserId)
 	return offset
 }
 
@@ -324,7 +324,7 @@ func (x *AuthResponse) sizeField2() (n int) {
 	if x.UserId == 0 {
 		return n
 	}
-	n += fastpb.SizeUint32(2, x.UserId)
+	n += fastpb.SizeInt64(2, x.UserId)
 	return n
 }
 
@@ -358,7 +358,7 @@ func (x *TokenResponse) sizeField3() (n int) {
 	if x.UserId == 0 {
 		return n
 	}
-	n += fastpb.SizeUint32(3, x.UserId)
+	n += fastpb.SizeInt64(3, x.UserId)
 	return n
 }
 

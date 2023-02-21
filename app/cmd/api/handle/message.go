@@ -11,8 +11,8 @@ import (
 
 func MessageAction(ctx context.Context, c *app.RequestContext) {
 	type actionReqWithoutId struct {
-		toId       uint32 `query:"to_user_id" vd:"$>=0"`
-		actionType uint32 `query:"action_type" vd:"$==1"`
+		toId       int64  `query:"to_user_id" vd:"$>=0"`
+		actionType int32  `query:"action_type" vd:"$==1"`
 		content    string `query:"content" vd:"$!=''"`
 	}
 	var req actionReqWithoutId
@@ -31,7 +31,7 @@ func MessageAction(ctx context.Context, c *app.RequestContext) {
 	}
 
 	err = rpc.SendMessage(ctx, &message.ActionRequest{
-		Id:         id.(uint32),
+		Id:         id.(int64),
 		ToUserId:   req.toId,
 		ActionType: req.actionType,
 		Content:    req.content,
@@ -44,7 +44,8 @@ func MessageAction(ctx context.Context, c *app.RequestContext) {
 
 func MessageChat(ctx context.Context, c *app.RequestContext) {
 	type chatReqWithoutId struct {
-		toId uint32 `query:"to_user_id" vd:"$>=0"`
+		toId       int64 `query:"to_user_id" vd:"$>=0"`
+		preMsgTime int64 `query:"pre_msg_time" vd:"$>=0"`
 	}
 	var req chatReqWithoutId
 	err := c.BindAndValidate(&req)
@@ -62,7 +63,7 @@ func MessageChat(ctx context.Context, c *app.RequestContext) {
 	}
 
 	resp, err := rpc.ListChat(ctx, &message.ChatRequest{
-		Id:       id.(uint32),
+		Id:       id.(int64),
 		ToUserId: req.toId,
 	})
 	if err != nil {

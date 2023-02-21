@@ -12,7 +12,7 @@ import (
 
 func RelationFollowAction(ctx context.Context, c *app.RequestContext) {
 	type followReqWithoutId struct {
-		toId       uint32                                        `query:"to_user_id" vd:"$>=0"`
+		toId       int64                                         `query:"to_user_id" vd:"$>=0"`
 		actionType relation.FollowActionRequest_FollowActionType `query:"action_type" vd:"$>=0"`
 	}
 	var req followReqWithoutId
@@ -31,7 +31,7 @@ func RelationFollowAction(ctx context.Context, c *app.RequestContext) {
 	}
 
 	err = rpc.FollowActionRPC(ctx, &relation.FollowActionRequest{
-		Id:         id.(uint32),
+		Id:         id.(int64),
 		ToUserId:   req.toId,
 		ActionType: req.actionType,
 	})
@@ -43,7 +43,7 @@ func RelationFollowAction(ctx context.Context, c *app.RequestContext) {
 
 func RelationList(ctx context.Context, c *app.RequestContext) {
 	type listRelationWithoutId struct {
-		toId uint32 `query:"user_id" vd:"$>=0"`
+		toId int64 `query:"user_id" vd:"$>=0"`
 	}
 	var req listRelationWithoutId
 
@@ -65,17 +65,17 @@ func RelationList(ctx context.Context, c *app.RequestContext) {
 	switch c.Param("relation") {
 	case "follow":
 		resp, err = rpc.ListFollowRPC(ctx, &relation.ListFollowRequest{
-			Id:     id.(uint32),
+			Id:     id.(int64),
 			UserId: req.toId,
 		})
 	case "follower":
 		resp, err = rpc.ListFansRPC(ctx, &relation.ListFansRequest{
-			Id:     id.(uint32),
+			Id:     id.(int64),
 			UserId: req.toId,
 		})
 	case "friend":
 		resp, err = rpc.ListFriendsRPC(ctx, &relation.ListFriendsRequest{
-			Id:     id.(uint32),
+			Id:     id.(int64),
 			UserId: req.toId,
 		})
 	default:

@@ -33,7 +33,7 @@ func TestMessageService(t *testing.T) {
 	)
 	r.NoError(err)
 
-	send := func(id uint32, toId uint32, content string) {
+	send := func(id int64, toId int64, content string) {
 		resp, err := cli.Action(ctx, &message.ActionRequest{
 			Id:         id,
 			ToUserId:   toId,

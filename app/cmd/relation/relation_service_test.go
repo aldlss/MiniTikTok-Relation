@@ -35,7 +35,7 @@ func TestRelationService(t *testing.T) {
 
 	var wg sync.WaitGroup
 	wg.Add(4)
-	followAction := func(id uint32, toId uint32, ActionType relation.FollowActionRequest_FollowActionType) {
+	followAction := func(id int64, toId int64, ActionType relation.FollowActionRequest_FollowActionType) {
 		req := &relation.FollowActionRequest{
 			Id:         id,
 			ToUserId:   toId,

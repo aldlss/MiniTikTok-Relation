@@ -37,7 +37,7 @@ func initAuthRPC() {
 	authClient = cli
 }
 
-func AuthRPC(ctx context.Context, req *auth.AuthRequest) (uint32, error) {
+func AuthRPC(ctx context.Context, req *auth.AuthRequest) (int64, error) {
 	resp, err := authClient.Auth(ctx, req)
 	if err != nil {
 		return 0, err

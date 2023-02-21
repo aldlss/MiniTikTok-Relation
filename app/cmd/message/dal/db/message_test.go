@@ -21,12 +21,12 @@ func testSendFriendMessage(t *testing.T) {
 func testListFriendMessage(t *testing.T) {
 	a := assert.New(t)
 	ctx := context.Background()
-	res, err := ListFriendMessage(ctx, 0, 0)
+	res, err := ListFriendMessage(ctx, 0, 0, 0)
 	a.NoError(err)
 	a.EqualValues(1, len(res))
 	a.EqualValues(0, res[0].ChatId)
 
-	res, err = ListFriendMessage(ctx, 1, 0)
+	res, err = ListFriendMessage(ctx, 1, 0, 0)
 	a.NoError(err)
 	a.EqualValues(2, len(res))
 	a.EqualValues(1, res[0].SenderId)

@@ -2,5 +2,5 @@ package model
 
 type ChatExtend struct {
 	Content  string `gorm:"column:content"`
-	SenderId uint32 `gorm:"column:sender"`
+	SenderId int64  `gorm:"column:sender"`
 }

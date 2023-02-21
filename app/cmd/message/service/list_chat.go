@@ -21,7 +21,7 @@ func (s ListChatService) ListChat(req *message.ChatRequest) ([]*message.Message,
 		return nil, errno.ParamErr
 	}
 
-	dbMessages, err := db.ListFriendMessage(s.ctx, req.Id, req.ToUserId)
+	dbMessages, err := db.ListFriendMessage(s.ctx, req.Id, req.ToUserId, req.PreMsgTime)
 	if err != nil {
 		return nil, err
 	}

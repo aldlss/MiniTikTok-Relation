@@ -5,8 +5,8 @@ import (
 	"github.com/aldlss/MiniTikTok-Social-Module/app/kitex_gen/pb/message"
 )
 
-func Message(dbMessage *db.Message, fromUserid uint32, toUserId uint32) *message.Message {
-	var toId uint32
+func Message(dbMessage *db.Message, fromUserid int64, toUserId int64) *message.Message {
+	var toId int64
 	if fromUserid == dbMessage.SenderId {
 		toId = toUserId
 	} else {
@@ -21,7 +21,7 @@ func Message(dbMessage *db.Message, fromUserid uint32, toUserId uint32) *message
 	}
 }
 
-func Messages(dbMessages []*db.Message, fromUserid uint32, toUserId uint32) []*message.Message {
+func Messages(dbMessages []*db.Message, fromUserid int64, toUserId int64) []*message.Message {
 	messages := make([]*message.Message, len(dbMessages))
 	for idx, dbMessage := range dbMessages {
 		messages[idx] = Message(dbMessage, fromUserid, toUserId)
